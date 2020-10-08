@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,telephone=no">
+    <title>Document</title>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.4.1/sdk.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
+
+        body {
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0px;
+        }
+        a{
+            text-decoration: none;
+        }
+        #contain {
+            width: 100vw;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #top {
+            width: 100vw;
+            height: 92vh;
+            display: flex;
+            background-color: #d2c7b9;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #draw {
+            width: 100vw;
+            height: 45vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #bc {
+            width: 43vh;
+            height: 43vh;
+            background-color: cadetblue;
+            border-radius: 50%;
+            box-shadow: 3px 3px 25px #202020;
+            position: absolute;
+            z-index: 1;
+        }
+
+        #circle {
+            width: 45vh;
+            height: 45vh;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 2;
+        }
+
+        #point {
+            height: 15vh;
+            width: 15vh;
+            background-color: #b6ac98;
+            position: absolute;
+            border-radius: 50%;
+            z-index: 3;
+            transition: transform 3s cubic-bezier(.2, 0.93, .43, 1);
+        }
+
+        #point::after {
+            content: '';
+            position: absolute;
+            left: 3.5vh;
+            top: -12vh;
+            border-width: 8vh 4vh;
+            border-style: solid;
+            border-color: transparent;
+            border-bottom-color: #b6ac98;
+            transform-origin: center;
+        }
+
+        #choice {
+            width: 100vw;
+            height: 45vh;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .store{
+            width: 40vw;
+            margin: 1vh 2vw;
+            text-decoration: none;
+            box-shadow: 1vh 1vh #a39485;
+            border: 1.5px solid #a39485;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+        .store:nth-child(n+11){
+            display: none;
+        }
+        .sq{
+            width: 2.5vh;
+            height: 2.5vh;
+            margin: 5px;
+        }
+        a:nth-child(10n+1) .sq {
+            background: #b4a57b;
+        }
+
+        a:nth-child(10n+2) .sq {
+            background: #e39b64d7;
+        }
+
+        a:nth-child(10n+3) .sq {
+            background: #c7bc92;
+        }
+
+        a:nth-child(10n+4) .sq {
+            background: #f8c255d5;
+        }
+
+        a:nth-child(10n+5) .sq {
+            background: #b3cfe2e3;
+        }
+
+        a:nth-child(10n+6) .sq {
+            background: #ebe5d9;
+        }
+
+        a:nth-child(10n+7) .sq {
+            background: #9ec098;
+        }
+
+        a:nth-child(10n+8) .sq {
+            background: #D5D2DD;
+        }
+
+        a:nth-child(10n+9) .sq {
+            background: #B1BEC4;
+        }
+
+        a:nth-child(10n+10) .sq {
+            background: #A9A0A5;
+        }
+
+
+        .text {
+            font-size: 4vw;
+            color: rgb(68, 65, 51);
+            font-family: Microsoft JhengHei;
+            font-weight: 600;
+        }
+
+        #change {
+            width: 100vw;
+            height: 8vh;
+            font-size: 4vh;
+            color: rgba(48, 38, 30, 0.801);
+            background-color: rgba(168, 133, 109, 0.89);
+            font-weight: 600;
+            text-align: center;
+            box-shadow: -3px 0px 5px black;
+            line-height: 8vh;
+            font-family: Microsoft JhengHei;
+        }
+        #result {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            background-color: rgba(202, 199, 186, 0.863);
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+        }
+
+        #img {
+            width: 100vw;
+            height: 40vh;
+            background-image: url('/../static/img/bgi.jpg');
+            background-size: cover;
+            background-position: bottom;
+            background-repeat:no-repeat;
+            background-color: rgb(0, 0, 0);
+            opacity: 0.7;
+        }
+        #intro {
+            width: 90vw;
+            height: 32vh;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: left;
+        }
+
+        #s_name {
+            width: 90vw;
+            text-align: left;
+            font-family: Microsoft JhengHei;
+            color: rgb(61, 59, 59);
+            font-weight: 600;
+            font-size: 4.1vh;
+            word-wrap: wrap;
+            margin-bottom: 2vh;
+        }
+
+        #s_score {
+            width: 90vw;
+            text-align: left;
+            font-family: Microsoft JhengHei;
+            color: rgba(0, 0, 0, 0.616);
+            font-weight: 600;
+            font-size: 3vh;
+            margin-bottom: 1vh;
+        }
+
+        #s_distance {
+            width: 90vw;
+            text-align: left;
+            font-family: Microsoft JhengHei;
+            color: rgba(0, 0, 0, 0.616);
+            font-weight: 600;
+            font-size: 3vh;
+            margin-bottom: 1vh;
+        }
+
+        #s_time {
+            width: 90vw;
+            text-align: left;
+            font-family: Microsoft JhengHei;
+            color: rgba(0, 0, 0, 0.616);
+            font-weight: 600;
+            font-size: 2.5vh;
+            margin-bottom: 1vh;
+        }
+
+        #func {
+            width: 100vw;
+            height: 20vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .function {
+            width: 15vh;
+            height: 15vh;
+            margin: 2vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon{
+            width: 6vh;
+            margin: 1vh;
+        }
+        .fun_txt{
+            font-family: Microsoft JhengHei;
+            color: rgba(0, 0, 0, 0.616);
+            text-align: center;
+            font-weight: 600;
+            font-size: 3vh;
+        }
+        #change_down {
+            width: 100vw;
+            height: 8vh;
+            font-size: 4vh;
+            color: rgba(48, 38, 30, 0.801);
+            background-color: rgba(168, 133, 109, 0.89);
+            font-weight: 600;
+            text-align: center;
+            box-shadow: -3px 0px 5px black;
+            line-height: 8vh;
+            font-family: Microsoft JhengHei;
+        }
+        .data_rank{
+            display: none;
+        }
+        .data_far{
+            display: none;
+        }
+        .data_time{
+            display: none;
+        }
+        .data_phone{
+            display: none;
+        }
+        .data_url{
+            display: none;
+        }
+        .data_share{
+            display: none;
+        }
+        #p {
+            margin: 0px;
+            font-size: 2.5vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="contain">
+        <div id="top">
+            <div id="draw">
+                <div id="bc"></div>
+                <img id="circle" src="/../static/img/draw.png" alt="">
+                <div id="point"></div>
+            </div>
+            <div id="choice">
+                {% for i in ids %}
+                <a class="store" href="#result">
+                    <div class="sq"></div>
+                    <div class="text">{{ i.name }}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="change" >繼續探索</div>
+        
+        <div id="result">
+            <div id="img"></div>
+            <div id="intro">
+                <div id="s_name"></div>
+                <div id="s_score"></div>
+                <div id="s_distance"></div>
+                <div id="s_time"></div>
+            </div>
+            <div id="func">
+                <a class="function" href="tel:+886-905075797"><img class="icon" src="/../static/img/phone.png" alt=""><div class="fun_txt">致電</div></a>
+                <a class="function" href="tel:+886-905075797"><img class="icon" src="/../static/img/go.png" alt=""><div class="fun_txt">馬上去</div></a>
+                <a class="function" href="tel:+886-905075797"><img class="icon" src="/../static/img/share.png" alt=""><div class="fun_txt">分享</div></a>
+            </div>
+            <div id="change_down">我再選選</div>
+        </div>
+        <div class="data_all">
+            <div class="data_rank">
+                {% for i in ids %}
+                <div class="rank">{{ i.rank }}</div>
+                {% endfor %}
+            </div>
+            <div class="data_far">
+                {% for i in ids %}
+                <div class="far">{{ i.far }}</div>
+                {% endfor %}
+            </div>
+            <div class="data_time">
+                {% for i in ids %}
+                <div class="time">{{ i.time }}</div>
+                {% endfor %}
+            </div>
+            <div class="data_phone">
+                {% for i in ids %}
+                <div class="phone">{{ i.phone }}</div>
+                {% endfor %}
+            </div>
+            <div class="data_url">
+                {% for i in ids %}
+                <div class="url">{{ i.url }}</div>
+                {% endfor %}
+            </div>
+            <div class="data_share">
+                {% for i in ids %}
+                <div class="share">{{ i.share }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script>
+        // var ids = {{ ids|safe }};
+
+        // $('#1').prepend(ids[0]);
+        // $('#1').append(ids[1]);
+        // for (i in ids){
+        //     console.log(i);
+        // }
+        var store_box = document.getElementsByClassName("store")
+        var data_name = document.getElementsByClassName("text")
+        var data_rank = document.getElementsByClassName("rank")
+        var data_far = document.getElementsByClassName("far")
+        var data_time = document.getElementsByClassName("time")
+        var data_phone = document.getElementsByClassName("phone")
+        var data_url = document.getElementsByClassName("url")
+        var data_share = document.getElementsByClassName("share")
+        var result_box
+        let getEle = document.getElementsByClassName.bind(document);
+        let pointer = document.getElementById('point');
+        let result_name = document.getElementById('s_name');
+        let result_rank = document.getElementById('s_score');
+        let result_far = document.getElementById('s_distance');
+        let result_time = document.getElementById('s_time');
+        let href = document.getElementsByClassName("function");
+        let onRotation = false; //紀錄有沒有在轉
+
+        for( i = 0 ; i < store_box.length ; i++ ){
+            store_box[i].setAttribute('i',i);
+            store_box[i].onclick=function(){
+                result_box=this.getAttribute('i');
+                if (data_name[result_box].innerText.length <= 6){
+                    result_name.style.fontSize = "6.5vh";
+                    result_rank.style.fontSize = "3.5vh";
+                    result_far.style.fontSize = "3.5vh";
+                } else if (data_name[result_box].innerText.length <= 14){
+                    result_name.style.fontSize = "5.5vh";
+                    result_rank.style.fontSize = "3vh";
+                    result_far.style.fontSize = "3vh";
+                } else {
+                    result_name.style.fontSize = "4.1vh";
+                    result_rank.style.fontSize = "3vh";
+                    result_far.style.fontSize = "3vh";
+                }
+                result_name.innerHTML = data_name[result_box].innerText;
+                result_rank.innerHTML = "評分 : "+data_rank[result_box].innerText+" 顆星";
+                result_far.innerHTML = "距離 : "+data_far[result_box].innerText;
+                result_time.innerHTML = "營業時間 : "+data_time[result_box].innerText;
+                href[0].href=data_phone[result_box].innerText;
+                href[1].href=data_url[result_box].innerText;
+                href[2].href=data_share[result_box].innerText;
+            }
+        }
+
+        let getStore = (function () {
+            currentDeg = 0;
+            return function () {
+                //轉兩到三圈
+                let rotateDeg = Math.random() * 360 + 1080;
+                currentDeg += rotateDeg;
+                let rewardText = Math.floor((currentDeg + 18) % 360 / 36)
+                return {
+                    deg : currentDeg,
+                    text: rewardText
+                }
+            }
+        })();
+        function point_store () {
+
+        } 
+        pointer.addEventListener('click', () => {
+            if (onRotation) return;
+            console.log('開始選店');
+            onRotation = true;
+            let nextStatus = getStore();
+            console.log(nextStatus);
+            if (data_name.length < 10) nextStatus.text = nextStatus.text%data_name.length;
+            result_name.innerHTML = data_name[nextStatus.text].innerText;
+            console.log(result_name.innerHTML);
+            result_rank.innerHTML = "評分 : "+data_rank[nextStatus.text].innerText+" 顆星";
+            console.log(result_rank.innerHTML);
+            result_far.innerHTML = "距離 : "+data_far[nextStatus.text].innerText;
+            console.log(result_far.innerHTML);
+            result_time.innerHTML = "營業時間 : "+data_time[nextStatus.text].innerText;
+            console.log(result_time.innerHTML);
+            if (data_name[nextStatus.text].innerText.length <= 6){
+                result_name.style.fontSize = "6.5vh";
+                result_rank.style.fontSize = "3.5vh";
+                result_far.style.fontSize = "3.5vh";
+            } else if (data_name[nextStatus.text].innerText.length <= 14){
+                result_name.style.fontSize = "5.5vh";
+                result_rank.style.fontSize = "3vh";
+                result_far.style.fontSize = "3vh";
+            } else {
+                result_name.style.fontSize = "4.1vh";
+                result_rank.style.fontSize = "3vh";
+                result_far.style.fontSize = "3vh";
+            }
+            href[0].href=data_phone[nextStatus.text].innerText;
+            href[1].href=data_url[nextStatus.text].innerText;
+            href[2].href=data_share[nextStatus.text].innerText;
+            pointer.style.transform = `rotateZ(${nextStatus.deg}deg)`;
+        })
+
+        pointer.addEventListener('transitionend', () => {
+            console.log('抽店結束');
+            onRotation = false;
+        })
+            $(document).ready(function () {
+                $(function () {
+                    $('#point').click(function () {
+                        setTimeout(() => { // 等閃爍三下結束
+                            $('html,body').animate({ scrollTop: $('#img').offset().top }, 500);
+                        }, 3000);
+                    });
+                });
+            }); 
+        </script>
+    </body>
+
+</html>

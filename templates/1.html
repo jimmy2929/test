@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>幸運大轉盤</title>
+
+    <style>
+        * {
+            /* 重置默認樣式 */
+
+            margin: 0;
+
+            padding: 0;
+
+            border: none;
+
+            outline: none;
+
+            user-select: none;
+
+        }
+
+        .wrapper {
+
+            position: relative;
+
+            height: 200px;
+
+            width: 200px;
+
+            padding: 20px;
+
+            margin: 20px;
+
+            background-color: #ff5555;
+
+            box-shadow: #000000 0px 0px 10px;
+
+            border-radius: 50%;
+
+        }
+        .panel {
+
+            position: relative;
+
+            height: 200px;
+
+            width: 200px;
+
+            background-color: #b7b7b7;
+
+            border-radius: 100px;
+
+        }
+
+        .sector {
+
+            position: absolute;
+
+            left: 100px;
+
+            top: 0px;
+            
+            width: 100px;
+
+            height: 200px;
+
+            font-size: 14px;
+
+            border-radius: 0px 100px 100px 0;
+
+            overflow: hidden;
+
+            transform-origin: left center;
+
+        }
+
+        .sector:nth-child(1) {
+
+            transform: rotate(-18deg);
+
+        }
+
+        .sector:nth-child(2) {
+
+            transform: rotate(18deg);
+
+        }
+
+        .sector:nth-child(3) {
+
+            transform: rotate(54deg);
+
+        }
+
+        .sector:nth-child(4) {
+
+            transform: rotate(90deg);
+
+        }
+
+        .sector:nth-child(5) {
+
+            transform: rotate(126deg);
+
+        }
+
+        .sector:nth-child(6) {
+
+            transform: rotate(162deg);
+
+        }
+
+        .sector:nth-child(7) {
+
+            transform: rotate(198deg);
+
+        }
+
+        .sector:nth-child(8) {
+
+            transform: rotate(234deg);
+
+        }
+
+        .sector:nth-child(9) {
+
+            transform: rotate(270deg);
+
+        }
+
+        .sector:nth-child(10) {
+
+            transform: rotate(306deg);
+
+        }
+
+        .sector:nth-child(2n+1) .sector-inner {
+
+            background: #fef6e0;
+
+        }
+
+        .sector:nth-child(2n) .sector-inner {
+
+            background: #ffffff;
+
+        }
+
+        .sector-inner {
+
+            text-align: center;
+
+            display: block;
+
+            width: 40px;
+
+            padding: 5px 3px 0 57px;
+
+            height: 195px;
+
+            transform: translateX(-100px) rotate(36deg);
+
+            transform-origin: center right;
+
+            border-radius: 100px 0 0 100px;
+
+        }
+
+        .sector-inner span {
+
+            display: block;
+
+            transform-origin: center;
+
+            transform: rotate(-19deg);
+
+            color: #d46854;
+
+        }
+
+        .pointer {
+
+            position: absolute;
+
+            left: 79px;
+
+            top: 79px;
+
+            z-index: 10;
+
+            height: 30px;
+
+            width: 30px;
+
+            padding: 6px;
+
+            color: #fff899;
+
+            line-height: 15px;
+
+            font-size: 12px;
+
+            text-align: center;
+
+            background-color: #ff5350;
+
+            border-radius: 50%;
+
+            border: 1px solid #ff5350;
+
+            transition: transform 3s cubic-bezier(.2, 0.93, .43, 1);
+
+        }
+
+        .pointer::after {
+
+            content: '';
+
+            position: absolute;
+
+            left: 14px;
+
+            top: -24px;
+
+            border-width: 12px 6px;
+
+            border-style: solid;
+
+            border-color: transparent;
+
+            border-bottom-color: #ff5350;
+
+            transform-origin: center;
+
+        }
+
+        .result {
+
+            margin: 20px 60px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="panel">
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>謝謝參與</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span> 5 0 積分</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>謝謝參與</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>100元話費</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span> 5 0 積分</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>謝謝參與</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>100元話費</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>謝謝參與</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span> 5 0 積分</span>
+
+                </div>
+
+            </div>
+
+            <div class="sector">
+
+                <div class="sector-inner">
+
+                    <span>10元話費</span>
+                </div>
+            </div>
+            <div class="pointer">開始抽獎</div>
+
+        </div>
+
+    </div>
+
+    <div class="result"></div>
+
+    <script>
+
+        let getEle = document.getElementsByClassName.bind(document);
+
+        let pointer = getEle('pointer')[0];
+
+        let result = getEle('result')[0];
+
+        // let lights = Array.prototype.slice.call(getEle('light'));
+
+        let onRotation = false; // 記錄當前是否正在旋轉，如果正在旋轉，就不能繼續點擊了
+
+        let reward = ['謝謝參與', '50積分', '謝謝參與', '100元話費', '50積分',
+
+            '謝謝參與', '100元話費', '謝謝參與', '50積分', '10元話費'];
+
+        // 根據隨機角度獲取獎勵
+
+        let getReward = (function () {
+
+            currentDeg = 0;
+
+            return function () {
+
+                // 轉兩圈到三圈
+
+                let rotateDeg = Math.random() * 360 + 1080;
+
+                currentDeg += rotateDeg;
+
+                let rewardText = reward[Math.floor((currentDeg + 18) % 360 / 36)]
+
+                return {
+
+                    deg: currentDeg,
+
+                    text: rewardText === '謝謝參與' ? '很遺憾，您沒有獲得獎品。' : '恭喜獲得: ' + rewardText
+                    // 如果 條件 為 true，運算子回傳 值1， 否則回傳 值2。 你可以在任何使用標準運算子的地方改用 條件運算子
+                }
+
+            }
+
+        })();
+
+        pointer.addEventListener('click', () => {
+
+            if (onRotation) return;
+
+            console.log('開始抽獎');
+
+            onRotation = true;
+
+            lights.forEach(light => { light.className += ' light-twinkling'; });
+
+            let nextStatus = getReward();
+
+            console.log(nextStatus)
+
+            result.innerText = nextStatus.text;
+
+            result.style.display = 'none';
+
+            pointer.style.transform = `rotateZ(${nextStatus.deg}deg)`;
+
+        })
+
+        pointer.addEventListener('transitionend', () => {
+
+            console.log('抽獎結束');
+
+            setTimeout(() => { // 等閃爍三下結束
+
+                onRotation = false;
+
+                lights.forEach(light => { light.className = 'light'; });
+
+                result.style.display = 'block';
+
+            }, 300);
+
+        })
+
+    </script>
+
+</body>
+
+</html>
